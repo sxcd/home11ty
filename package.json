@@ -1,0 +1,29 @@
+{
+  "name": "shanen-works-eleventy",
+  "version": "1.0.0",
+  "description": "Shanen Works in Tech - Personal blog migrated from Jekyll to Eleventy",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "dev": "eleventy --serve --watch",
+    "clean": "rm -rf _site"
+  },
+  "keywords": [
+    "eleventy",
+    "blog",
+    "tech",
+    "data-privacy"
+  ],
+  "author": "Shanen Tajjdeen Khazin",
+  "license": "MIT",
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-rss": "^1.2.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0"
+  },
+  "dependencies": {
+    "markdown-it": "^13.0.2",
+    "markdown-it-anchor": "^8.6.7"
+  }
+}
