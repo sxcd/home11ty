@@ -79,7 +79,7 @@
   <div class="post-content">
     <p>Exactly 1 year ago I created PrivacyGPT. It caused me issues. LOTS of issues. So I re-wrote it in Flask over a weekend. I've never used Flask prior.</p>
 <p><a href="https://privacybotweb.shanen.works/" title="privacybot">Click me if you wanna check it out right away!</a></p>
-<h1 id="background:" tabindex="-1">Background: <a class="direct-link" href="#background:" aria-hidden="true">#</a></h1>
+<h1>Background:</h1>
 <p>So last year I made <a href="/llm/">Privacy GPT</a>, a GPT wrapper using a vector database consisting of my custom knowledge base, a.k.a raw text of the KSA law, which can be used to ask questions particular to Data Privacy laws in the Middle East (I'm a Data Privacy professional, so this was a legit use case as Data Privacy is a relatively new concept in the Middle East and we're still seeing updates and legislations coming in).</p>
 <p><img src="/images/saudii.jpeg" alt="Saudi Arabia Data Privacy Law"></p>
 <p>It was written in Python. When I initially worked on it, my intention was to play around with OpenAI's LLMs and build an MVP showcasing a custom knowledge bot. I quickly found out having the text of law for multiple jurisdictions in a prompt template was probably the <strong>worst</strong> way to go about this.</p>
@@ -90,7 +90,7 @@
 <p>WELL,  you could see it in action <strong>IF</strong> it was running and not asleep. Unless you paid for streamlit, you couldn't use custom domains and I had to <em>iframe</em> it on my domain, and my app specifically had an issue of having to be manually rebooted from my streamlit dashboard everytime it went to sleep. Yes, <strong>sleep</strong>, another con of hosting it for free. The biggest one as my app would go to sleep every few hours and it was never up when I needed people to see it, or you were a random visitor. I thought I was clever trying to use a CRON job to keep my app awake, but yeah, that didn't work.</p>
 <p><img src="/images/sleep.png" alt="App Sleep Issue"></p>
 <p>It was truly annoying but I never thought about alternatives or fixing it and the months went by, life happens. Until few weeks ago when I realised the app would not even reboot as some dependencies (cough cough...langchain) were deprecated, OpenAI API replaced User API keys with Project API keys, and it was almost an year since the app was up. And then I thought maybe it was time.</p>
-<h1 id="the-solution:" tabindex="-1">The Solution: <a class="direct-link" href="#the-solution:" aria-hidden="true">#</a></h1>
+<h1>The Solution:</h1>
 <p><a href="https://flask.palletsprojects.com/en/3.0.x/">Flask</a>. Light, easy, Dependency agnostic, no strings attached...like a weekend fling.</p>
 <p>Going with Flask was a no brainer, I wanted to keep things lightweight and host the whole application on my VPS alongside <a href="http://playground.shanen.works/">other applications</a>, I would use my current <a href="https://nginx.org/en/">nginx</a> setup and have the hosted web-app point to a <a href="https://privacybotweb.shanen.works/">custom subdomain</a>.</p>
 <p>Now, there were two parts to this that made sense at the time. First, fix the app and get it running. Next, rewrite the whole thing in Flask, because what could possibly go wrong.</p>
