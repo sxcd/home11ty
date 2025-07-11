@@ -11,21 +11,21 @@ else
     exit 1
 fi
 
-if [ -d "src/includes" ]; then
-    echo "✅ src/includes/ directory exists"
+if [ -d "src/layouts" ]; then
+    echo "✅ src/layouts/ directory exists"
     echo "📄 Templates found:"
-    ls -la src/includes/
+    ls -la src/layouts/
 else
-    echo "❌ src/includes/ directory missing"
+    echo "❌ src/layouts/ directory missing"
     exit 1
 fi
 
-if [ -d "src/data" ]; then
-    echo "✅ src/data/ directory exists"
+if [ -d "src/config" ]; then
+    echo "✅ src/config/ directory exists"
     echo "📄 Data files found:"
-    ls -la src/data/
+    ls -la src/config/
 else
-    echo "❌ src/data/ directory missing"
+    echo "❌ src/config/ directory missing"
     exit 1
 fi
 
