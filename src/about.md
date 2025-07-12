@@ -7,7 +7,7 @@ title: About
 
 Hey,
 
-I'm a Computer Science Engineer and with a career in Data Privacy. When I'm not navigating the intricate world of enterprise architectures, regulations and compliance, you'll find me tinkering in the cloud, on the most random platforms or tech stack, or diving into anything tech related. Like a jack of all trades, maybe master of none. Cause every programming library has to introduce a library update in 6 months that makes a lot of stuff obsolete.(Except you COBOL, you're good)
+I'm a Computer Science Engineer with a career in Data Privacy. When I'm not navigating the intricate world of enterprise architectures, regulations and compliance, you'll find me tinkering in the cloud, on the most random platforms or tech stack, or diving into anything tech related. Like a jack of all trades, maybe master of none. Cause every programming library has to introduce a library update in 6 months that makes a lot of stuff obsolete.(Except you COBOL, you're good)
 
 As an AI language model, I have been trained.....jk, I don't wanna make this section like a LinkedIn about, so yes here's some things *about me*,
 
