@@ -1,0 +1,108 @@
+---
+layout: post.njk
+title: Goodbye Jekyll, Hello Eleventy.
+date: 2025-07-12
+excerpt: After years of this site with Jekyll, decided it was time for change. Here's why and how I migrated to lighter and simpler, Eleventy.
+---
+
+IF you've been here before, you might notice things look a bit different now. I changed jobs, moved countries. And oh yeah, the site's got a fresh coat of dark mode by default, cleaner design and under the hood, I've ditched Jekyll for Eleventy (11ty). Here's how I pulled it off.
+
+## Why Leave Jekyll?
+
+I've been using Jekyll for a while now. it's what powered this site from the start. It's solid for static sites, especially if you're in the Ruby ecosystem or hosting on GitHub Pages. But as I evovled, a few pain points started to add up:
+
+- **Ruby Dependency Hell**: Jekyll runs on Ruby, and managing gems, versions, and dependencies can be a hassle, especially on macOS where Ruby updates break things. I wanted something in Node.js, which I'm waaaaay more comfortable with nd it's easy to troubleshoot.
+
+- **Build Times and Flexibility**: Eleventy is known for being lightning-fast and super flexible. You can use Nunjucks, Liquid, or even mix templates. Plus, it's just JavaScript, so customizing filters, shortcodes, and plugins was easier.
+
+- **Modern Features Out of the Box**: I NEEDED to implement dark mode natively and make the design cleaner without hacking too much CSS. Eleventy made it easier to integrate modern tooling, and I could keep the structure similar while tweaking the aesthetics.
+
+Don't get me wrong—Jekyll served me quite well, but it was time.
+
+## Migration Blueprint
+
+After a lot of local testing and polling AI for workarounds, below's a step-by-step I followed.
+
+### Step 1: Set Up Eleventy
+
+First, initialize a new Node project in my repo:
+
+```bash
+npm init -y
+npm install @11ty/eleventy luxon
+```
+
+Luxon was for handling dates nicely, since my posts need readable formats.
+
+Then create a `.eleventy.js` config file to set up directories:
+
+```javascript
+module.exports = function(eleventyConfig) {
+  // Passthrough copies for static assets
+  eleventyConfig.addPassthroughCopy("src/css");
+  eleventyConfig.addPassthroughCopy("src/images");
+  // ... other assets
+
+  // Date filters
+  eleventyConfig.addFilter("readableDate", dateObj => {
+    const { DateTime } = require("luxon");
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("LLLL dd, yyyy");
+  });
+
+  // Collections for posts
+  eleventyConfig.addCollection("posts", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("src/posts/*.md").reverse();
+  });
+
+  return {
+    dir: {
+      input: "src",
+      includes: "layouts",
+      output: "_site"
+    }
+  };
+};
+```
+
+I moved all content into a `src/` folder to keep things organized—posts in `src/posts/`, layouts in `src/layouts/`, etc.
+
+### Step 2: Convert Layouts and Templates
+
+Jekyll uses Liquid templates in `_layouts/` and `_includes/`. Eleventy defaults to Nunjucks, which I chose for its power.
+
+- Converted `default.html` to `base.njk` with Nunjucks syntax (e.g., `{% block content %}` instead of `{{ content }}`).
+- Made a `post.njk` for blog posts.
+- Updated the index page to loop over collections: `{% for post in collections.posts %}`.
+
+I kept the structure similar: header, footer, navigation—but added dark mode CSS with variables for colors.
+
+For dark mode, I set up CSS like:
+
+```css
+:root {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  /* ... */
+}
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+```
+
+
+### Step 3: Migrate Posts and Assets
+
+- Moved all Markdown posts to `src/posts/` and updated frontmatter to use `layout: post.njk`.
+- Copied images, docs, favicons into `src/`.
+- Tested locally with `npx @11ty/eleventy --serve` to ensure everything rendered.
+
+Had to tweak some paths (e.g., `{{ site.baseurl }}` became relative or used Eleventy’s permalink system).
+
+
+
+For deployment, I set up Cloudflare Pages with the build command `npx @11ty/eleventy` and output to `_site`. After some config tweaks, it went live without hitches.
+
+### Final Thoughts
+
+The migration took a weekend, but it was worth it. The site's faster, easier to maintain, and looks sharper in dark mode. If you're on Jekyll and feeling stuck, maybe give Eleventy a shot.
