@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About – Shanen Works in Tech. – A Privacy Technologist</title>
+    <title>Goodbye Jekyll, Hello Eleventy. – Shanen Works in Tech. – A Privacy Technologist</title>
     
     <!-- Meta tags -->
     <meta name="description" content="A Privacy Technologist">
@@ -65,25 +65,101 @@
         <!-- Main Content -->
         <main class="site-main">
             <div class="container">
-                <h1>About</h1>
-<p>Hey,</p>
-<p>I'm a Computer Science Engineer with a career in Data Privacy. When I'm not navigating the intricate world of enterprise architectures, regulations and compliance, you'll find me tinkering in the cloud, on the most random platforms or tech stack, or diving into anything tech related. Like a jack of all trades, maybe master of none. Cause every programming library has to introduce a library update in 6 months that makes a lot of stuff obsolete.(Except you COBOL, you're good)</p>
-<p>As an AI language model, I have been trained.....jk, I don't wanna make this section like a LinkedIn about, so yes here's some things <em>about me</em>,</p>
+                
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">Goodbye Jekyll, Hello Eleventy.</h1>
+    <div class="post-meta">
+      <time datetime="2025-07-12">
+        July 12, 2025
+      </time>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <p>IF you've been here before, you might notice things look a bit different now. I changed jobs, moved countries, started fresh. And oh yeah, the site's got a fresh coat of dark mode by default, cleaner design and under the hood, I've ditched Jekyll for Eleventy (11ty). Here's how I pulled it off.</p>
+<h2>Why Leave Jekyll?</h2>
+<p>I've been using Jekyll for a while now. It's what powered this site from the start. It's solid for static sites, especially if you're in the Ruby ecosystem or hosting on GitHub Pages. But as I evolved, a few pain points started to add up:</p>
 <ul>
-<li>I game. Grinding <a href="https://www.focus-entmt.com/en/games/warhammer-40000-space-marine-2">Space Marine 2</a> at the moment and Forza always on the side, Story based games like Life is Strange have a special place in my heart.</li>
-<li>I love cameras. 360 cameras are dope especially for reframing your PoV after you're done shooting. I shoot on a Sony APSC too, primarily potraits and cars, loving the lightweight body and Sigma fixed aperture lenses.</li>
-<li><a href="https://www.youtube.com/watch?v=D28ntCyODmE">I drive, hehe.</a>. My petrolhead bros made me fall in love with cars.</li>
-<li>It's been a while since I've read anything not self help, would appreciate suggestions.</li>
-<li><a href="https://en.wikipedia.org/wiki/Odesza">Odesza</a> is my all time favourite duo. I could listen to all their albums on repeat forever. Hope I'll catch them live some day!</li>
-<li>I take my time with travel. I want to see as much as I can, spend as much time understanding what I'm looking at on trips.</li>
+<li>
+<p><strong>Ruby Dependency Hell</strong>: Jekyll runs on Ruby, and managing gems, versions, and dependencies can be a hassle, especially on macOS where Ruby updates break things. I wanted something in Node.js, which I'm way more comfortable with and it's easy to troubleshoot.</p>
+</li>
+<li>
+<p><strong>Build Times and Flexibility</strong>: Eleventy is known for being lightning-fast and super flexible. You can use Nunjucks, Liquid, or even mix templates. Plus, it's just JavaScript, so customizing filters, shortcodes, and plugins was easier.</p>
+</li>
+<li>
+<p><strong>Modern Features Out of the Box</strong>: I needed to implement dark mode natively and make the design cleaner without hacking too much CSS. Eleventy made it easier to integrate modern tooling, and I could keep the structure similar while tweaking the aesthetics.</p>
+</li>
 </ul>
-<p>My journey from stepping into this industry has taken me from exploring old-school messaging protocols like IRC to self-hosting web applications, and even participating in the IBM MTM Hackathon where I got my hands dirty with COBOL and REXX on a mainframe in college. Lately, I've been captivated by the potential of LLMs. I took the plunge to remake with OpenAI API to create a custom knowledge chatbot focused on Middle Eastern privacy laws, check it out at <a href="https://shanen.works/flask/">privacybotweb.shanen.works</a>!</p>
-<p>I literally like working on anything with compute or programming, currently trying to learn Springboot and make my first Java app. AI Agentic era is making me every so lazy.</p>
-<p>So yeah that's me, Feel free to explore the site, and don't hesitate to reach out if you'd like to chat about data privacy, technology, or just about anything else!</p>
-<h2>Resume</h2>
-<p>Do grab a copy of <a href="/docs/Shanen_Tajjdeen_Khazin_CV.pdf">my resume</a> while you're here!</p>
-<h2>Contact me</h2>
-<p><a href="mailto:hi@shanen.works">hi@shanen.works</a></p>
+<p>Don't get me wrong, Jekyll served me quite well, but it was time.</p>
+<h2>Migration Blueprint</h2>
+<p>After a lot of local testing and polling AI for workarounds, below's a step-by-step I followed.</p>
+<h3>Step 1: Set Up Eleventy</h3>
+<p>First, initialize a new Node project in my repo:</p>
+<pre><code class="language-bash">npm init -y
+npm install @11ty/eleventy luxon
+</code></pre>
+<p>Luxon was for handling dates nicely, since my posts need readable formats.</p>
+<p>Then create a <code>.eleventy.js</code> config file to set up directories:</p>
+<pre><code class="language-javascript">module.exports = function(eleventyConfig) {
+  // Passthrough copies for static assets
+  eleventyConfig.addPassthroughCopy(&quot;src/css&quot;);
+  eleventyConfig.addPassthroughCopy(&quot;src/images&quot;);
+  // ... other assets
+
+  // Date filters
+  eleventyConfig.addFilter(&quot;readableDate&quot;, dateObj =&gt; {
+    const { DateTime } = require(&quot;luxon&quot;);
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat(&quot;LLLL dd, yyyy&quot;);
+  });
+
+  // Collections for posts
+  eleventyConfig.addCollection(&quot;posts&quot;, function(collectionApi) {
+    return collectionApi.getFilteredByGlob(&quot;src/posts/*.md&quot;).reverse();
+  });
+
+  return {
+    dir: {
+      input: &quot;src&quot;,
+      includes: &quot;layouts&quot;,
+      output: &quot;_site&quot;
+    }
+  };
+};
+</code></pre>
+<p>I moved all content into a <code>src/</code> folder to keep things organized, posts in <code>src/posts/</code>, layouts in <code>src/layouts/</code>, etc.</p>
+<h3>Step 2: Convert Layouts and Templates</h3>
+<p>Jekyll uses Liquid templates in <code>_layouts/</code> and <code>_includes/</code>. Eleventy defaults to Nunjucks, which I chose for its power.</p>
+<ul>
+<li>Converted <code>default.html</code> to <code>base.njk</code> with Nunjucks syntax.</li>
+<li>Made a <code>post.njk</code> for blog posts.</li>
+<li>Updated the index page to loop over collections.</li>
+</ul>
+<p>I kept the structure similar: header, footer, navigation...but added dark mode CSS with variables for colors.</p>
+<p>For dark mode, I set up CSS like:</p>
+<pre><code class="language-css">:root {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+}
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+</code></pre>
+<h3>Step 3: Migrate Posts and Assets</h3>
+<ul>
+<li>Moved all Markdown posts to <code>src/posts/</code> and updated frontmatter to use <code>layout: post.njk</code>.</li>
+<li>Copied images, docs, favicons into <code>src/</code>.</li>
+<li>Tested locally to ensure everything rendered.</li>
+</ul>
+<p>Had to tweak some paths but overall straightforward.</p>
+<h3>Step 4: Deploy</h3>
+<p>For deployment, I set up Cloudflare Pages with the build command <code>npx @11ty/eleventy</code> and output to <code>_site</code>. After some config tweaks, it went live without hitches.</p>
+<h3>Yeah, That’s It, Really</h3>
+<p>The migration took a weekend, buuuut it was worth it. The site's faster, easier to maintain, and looks sharper in dark mode. If you're on Jekyll and feeling stuck, maybe give Eleventy a shot.</p>
+
+  </div>
+</article>
 
             </div>
         </main>
