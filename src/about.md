@@ -34,7 +34,7 @@ So yeah, that's me. Feel free to explore the site, and don't hesitate to reach o
 
 ## Resume
 
-Do grab a copy of my [resume](/resume.pdf) while you're here!
+Do grab a copy of my [resume](/docs/Shanen_Tajjdeen_Khazin_CV.pdf) while you're here!
 
 ## Contact Me
 
